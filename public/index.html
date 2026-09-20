@@ -3,17 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mi primera pagina</title>
+        <title>Mi lista de tareas</title>
 
         <link rel="stylesheet" href="css/style.css">
     </head>
 
     <body>
-        <h1>Mi primera pagina web</h1>
+        <main>
+            <h1>Mi lista de tareas</h1>
+            <p>Mis tareas de aprendizaje: </p>
+            <ul id="lista-tareas"></ul>
 
-        <p>Estoy aprendiendo desarrollo</p>
-        <p id="mensaje">Cargado mensaje ...</p>
-
+            <form id="formulario-tarea">
+                <input 
+                    type="text"
+                    id="titulo-tarea"
+                    placeholder="Escribir una tarea"
+                    required
+                >
+                <button type="submit">Agregar Tarea</button>
+            </form>
+        </main>
         <script src="js/script.js"></script>
     </body>
 </html>
