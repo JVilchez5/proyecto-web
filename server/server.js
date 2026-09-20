@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./database');
 
 const app = express();
 const PORT = 3000;
@@ -7,30 +8,22 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-let tareas=[
-    {
-        id: 1,
-        titulo: 'Apredner Node.js',
-        completada: false
-    },
-    {
-        id: 2,
-        titulo: 'Apredner git',
-        completada: true
-    }
-]
-
-app.get('/api/tareas',(req, res) => {
+app.get('/api/tareas', (req, res) => {
+    const tareas = db.prepare('select * from tareas').all();
     res.json(tareas);
 });
 
-app.post('/api/tareas', (req, res) => {
-    const nuevaTarea ={
-        id: tareas.length+1,
-        titulo: req.body.titulo,
-        completada: false
-    };
-    tareas.push(nuevaTarea);
+app.post('/api/tareas',(req, res)=>{
+    const{titulo} = req.body;
+
+    const resultado = db
+    .prepare('insert into tareas (titulo) values (?)')
+    .run(titulo);
+
+    const nuevaTarea=db
+    .prepare('select * from tareas where id = ?')
+    .get (resultado.lastInsertRowid);
+
     res.status(201).json(nuevaTarea);
 });
 
